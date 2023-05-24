@@ -1,0 +1,17 @@
+Space bar = Triggers the alarm
+
+Mouse left click =  turns the panel to the right
+
+Mouse right click =  turn panel to the left
+
+Q = camera 1
+
+W = camera 2
+
+E = camera 3
+
+Left Arrow = opens the door
+
+right Arrow =  closes the door
+
+Adnane thing = C and M and B
