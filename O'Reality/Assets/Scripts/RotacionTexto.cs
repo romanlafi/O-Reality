@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class RotacionTexto : MonoBehaviour
 {
-   public Transform objetoASeguir;
+    public Transform objetoASeguir;
     public TextMesh textoRotante;
-    public float alturaTexto = -1.0f;
-
 
     private void Update()
     {

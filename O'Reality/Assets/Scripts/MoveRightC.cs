@@ -21,9 +21,13 @@ public class MoveRightC : MonoBehaviour
     public ParticleSystem craftingSpark;
     bool call = false;
     bool callback = false;
+    bool tallar = false;
     public Canvas canvas;
     public TextMeshProUGUI textMeshPro;
     public RawImage rawImage;
+    public Transform cubeContainer;
+    private float elapsedTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +41,8 @@ public class MoveRightC : MonoBehaviour
         OriginalPos = transform.position;
         anim = LeftC.GetComponent<Animator>();
         canvas.enabled = false;
+        cubeContainer.gameObject.SetActive(false);
+
 
     }
 
@@ -55,47 +61,68 @@ public class MoveRightC : MonoBehaviour
             callback = true;
         }
     }
+
+    public void comenzarTallar() 
+    {
+        if (!tallar)
+        {
+            tallar = true;
+            elapsedTime = 0f;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         if (call)
         {   // turn on the screen
             canvas.enabled = true;
+            cubeContainer.gameObject.SetActive(true);
 
             // enable the video video
             textMeshPro.enabled = true;
             rawImage.enabled = true;
 
             needleAnim.SetBool("turn", true);
-            movmment();
+
+           // movmment();
+
+           call = false;
         }
 
         if (callback)
         {   // turn off the screen
             canvas.enabled = false;
+            cubeContainer.gameObject.SetActive(false);
 
             // disable the vibration video
             textMeshPro.enabled = false;
             rawImage.enabled = false;
 
             needleAnim.SetBool("turn", false);
-            back();
+            //back();
+            callback = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            RightC.Rotate(0, -45, 0);
-        }
+        if (tallar) {
+                
+                elapsedTime += Time.deltaTime;
+                movmment();
 
+                if (elapsedTime>=10f) 
+                {
+                    back();
+                    tallar = false;
+                }
+            }
     }
+
     private void movmment()
     {
         // Moves the object forward at two units per second.
-        if (call)
-        {
+    
             movingDown = true;
 
-        }
+        
         if (movingDown)
         {
 
@@ -116,19 +143,22 @@ public class MoveRightC : MonoBehaviour
                 anim.SetBool("turn", true);
                 craftingSmoke.Play();
                 craftingSpark.Play();
-                call = false;
+                //call = false;
+                //tallar = false;
             }
         }
+
+
+        
     }
 
     private void back()
     {
         // Moves the object forward at two units per second.
-        if (callback)
-        {
+       
             movingRight = true;
 
-        }
+        
         if (movingRight)
         {
 
@@ -149,7 +179,7 @@ public class MoveRightC : MonoBehaviour
             if (transform.position == OriginalPos)
             {
                 movingUP = false;
-                callback = false;
+                //callback = false;
             }
         }
     }
