@@ -60,6 +60,12 @@ public class TransformarPieza : MonoBehaviour
     Vector3 nuevoTamaño = despues.transform.localScale;
     antes.transform.localScale = nuevoTamaño;
 
+    Vector3 newPosition = antes.transform.localPosition;
+    newPosition += new Vector3(0f, -0.017f, 0f);
+
+    antes.transform.localPosition = newPosition;
+    Debug.Log("Transformado.");
+
     tallar = false;
     }
 }
