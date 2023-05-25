@@ -22,11 +22,13 @@ public class MoveRightC : MonoBehaviour
     bool call = false;
     bool callback = false;
     bool tallar = false;
+    bool stopTallar = false;
     public Canvas canvas;
     public TextMeshProUGUI textMeshPro;
     public RawImage rawImage;
     public Transform cubeContainer;
     private float elapsedTime;
+    public AudioSource sonidoCrafteo;
 
     // Start is called before the first frame update
     void Start()
@@ -41,9 +43,8 @@ public class MoveRightC : MonoBehaviour
         OriginalPos = transform.position;
         anim = LeftC.GetComponent<Animator>();
         canvas.enabled = false;
-        cubeContainer.gameObject.SetActive(false);
-
-
+        sonidoCrafteo.Stop();
+        //cubeContainer.gameObject.SetActive(false);
     }
 
 
@@ -52,6 +53,7 @@ public class MoveRightC : MonoBehaviour
         if (!call)
         {
             call = true;
+            StartCoroutine(ResetCall(10f));
         }
     }
     public void clickback()
@@ -62,66 +64,52 @@ public class MoveRightC : MonoBehaviour
         }
     }
 
-    public void comenzarTallar() 
+    private IEnumerator ResetCall(float delay)
     {
-        if (!tallar)
-        {
-            tallar = true;
-            elapsedTime = 0f;
-        }
+        yield return new WaitForSeconds(delay);
+        clickback();
     }
+
+
     // Update is called once per frame
     void Update()
     {
         if (call)
         {   // turn on the screen
-            canvas.enabled = true;
-            cubeContainer.gameObject.SetActive(true);
+            //canvas.enabled = true;
+            //cubeContainer.gameObject.SetActive(true);
 
             // enable the video video
             textMeshPro.enabled = true;
             rawImage.enabled = true;
 
             needleAnim.SetBool("turn", true);
+            sonidoCrafteo.Play();
 
-           // movmment();
-
-           call = false;
+            movmment();
         }
 
         if (callback)
         {   // turn off the screen
-            canvas.enabled = false;
-            cubeContainer.gameObject.SetActive(false);
+            //canvas.enabled = false;
+            //cubeContainer.gameObject.SetActive(false);
 
             // disable the vibration video
             textMeshPro.enabled = false;
             rawImage.enabled = false;
 
             needleAnim.SetBool("turn", false);
-            //back();
-            callback = false;
+            back();
+            
         }
-
-        if (tallar) {
-                
-                elapsedTime += Time.deltaTime;
-                movmment();
-
-                if (elapsedTime>=10f) 
-                {
-                    back();
-                    tallar = false;
-                }
-            }
     }
 
     private void movmment()
     {
-        // Moves the object forward at two units per second.
-    
+        if (call)
+        {
             movingDown = true;
-
+        }
         
         if (movingDown)
         {
@@ -143,8 +131,7 @@ public class MoveRightC : MonoBehaviour
                 anim.SetBool("turn", true);
                 craftingSmoke.Play();
                 craftingSpark.Play();
-                //call = false;
-                //tallar = false;
+                call = false;
             }
         }
 
@@ -154,10 +141,10 @@ public class MoveRightC : MonoBehaviour
 
     private void back()
     {
-        // Moves the object forward at two units per second.
-       
+        if (callback) 
+        {
             movingRight = true;
-
+        }
         
         if (movingRight)
         {
@@ -179,7 +166,7 @@ public class MoveRightC : MonoBehaviour
             if (transform.position == OriginalPos)
             {
                 movingUP = false;
-                //callback = false;
+                callback = false;
             }
         }
     }
