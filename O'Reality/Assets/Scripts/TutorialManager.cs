@@ -6,21 +6,27 @@ using Microsoft.MixedReality.Toolkit.UI;
 
 public class TutorialManager : MonoBehaviour
 {
+    //Objetos para el tutorial
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private int currentStepIndex = 0;
+    private bool final;
 
+    //Botones
     public GameObject botonOn;
     public GameObject botonPuerta;
 
+    //Pantalla
     public Camera mainCamera;
     public Text instructionText;
     public RectTransform tutorialCanvas;
-    public float canvasDistance = 0.8f;
-    public float canvasHorizontalOffset = -0.2f;
+    public FadeCanvas fadeCanvasScript;
+    public float canvasDistance;
+    public float canvasHorizontalOffset;
     
     // Start is called before the first frame update
     void Start()
     {
+        final = false;
         rellenarPasos();
     }
 
@@ -30,10 +36,8 @@ public class TutorialManager : MonoBehaviour
         // Verifica si el tutorial ha terminado
         if (currentStepIndex >= tutorialSteps.Count)
         {
-            // Realiza acciones cuando se completa el tutorial
-            instructionText.text = "Tutorial completado";
-
-            Debug.Log("Tutorial completado.");
+            currentStepIndex = -1;
+            terminarTutorial();
             return;
         }
 
@@ -53,31 +57,34 @@ public class TutorialManager : MonoBehaviour
         if (tutorialCanvas != null && mainCamera != null)
         {
             instructionText.text = currentStep.instruction;
-
-            Vector3 desiredPosition = mainCamera.transform.position + mainCamera.transform.forward * canvasDistance;
-            Vector3 cameraToCanvas = tutorialCanvas.position - mainCamera.transform.position;
-            Vector3 canvasRightOffset = mainCamera.transform.right * canvasHorizontalOffset;
-            Vector3 canvasOffset = Vector3.Cross(mainCamera.transform.forward, Vector3.up).normalized * canvasRightOffset.magnitude;
-            desiredPosition += canvasOffset;
-
-            tutorialCanvas.position = desiredPosition;
-            tutorialCanvas.rotation = Quaternion.LookRotation(tutorialCanvas.position - mainCamera.transform.position); // Asegura que el canvas siempre esté enfocado hl canvas siempre esté enfocado hacia la cámara
-            
-            //Vector3 desiredPosition = mainCamera.transform.position + mainCamera.transform.forward * canvasDistance;
-            //desiredPosition += mainCamera.transform.right * canvasOffset; // Desplaza el canvas hacia un lado (ajusta según tus necesidades)
-            //tutorialCanvas.anchoredPosition3D = desiredPosition;
-            //tutorialCanvas.rotation = Quaternion.LookRotation(tutorialCanvas.position - mainCamera.transform.position);
-            
-            //tutorialCanvas.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 1f;
-            //tutorialCanvas.transform.rotation = mainCamera.transform.rotation;
+            posicionPantalla();
         }
-
     }
 
     private void rellenarPasos()
     {
         tutorialSteps.Add(new TutorialStep(botonOn, "Haz clic en el botón de encendido"));
         tutorialSteps.Add(new TutorialStep(botonPuerta, "Cierra la puerta utilizando el botón"));
+    }
+
+    private void posicionPantalla()
+    {
+        Vector3 desiredPosition = mainCamera.transform.position + mainCamera.transform.forward * canvasDistance;
+        Vector3 cameraToCanvas = tutorialCanvas.position - mainCamera.transform.position;
+        Vector3 canvasRightOffset = mainCamera.transform.right * canvasHorizontalOffset;
+        Vector3 canvasOffset = Vector3.Cross(mainCamera.transform.forward, Vector3.up).normalized * canvasRightOffset.magnitude;
+        desiredPosition += canvasOffset;
+
+        tutorialCanvas.position = desiredPosition;
+        tutorialCanvas.rotation = Quaternion.LookRotation(tutorialCanvas.position - mainCamera.transform.position);
+    }
+
+    private void terminarTutorial()
+    {
+        instructionText.text = "Tutorial completado";
+        fadeCanvasScript.Fade();
+
+        Debug.Log("Tutorial completado.");
     }
 
     private bool IsClicked(GameObject targetObject)
