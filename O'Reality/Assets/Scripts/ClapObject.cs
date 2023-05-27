@@ -14,8 +14,6 @@ public class ClapObject : MonoBehaviour
         
             transform.position = targetPosition.position;
             transform.rotation = targetPosition.rotation;
-           
-           
         }
   
 }

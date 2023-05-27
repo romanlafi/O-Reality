@@ -6,17 +6,13 @@ using UnityEngine.UI;
 public class FadeCanvas : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
-    public float fadeDuration = 5;
+    public float fadeDuration;
     public float delay;
-
-    private bool fading = false;
 
     public void Fade()
     {
         StartCoroutine(FadeOut());
         Debug.Log("Fade iniciado");
-
-        fading = true;
     }
 
     private void Start()

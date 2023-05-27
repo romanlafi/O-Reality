@@ -12,6 +12,9 @@ public class TutorialManager : MonoBehaviour
     private bool final;
 
     //Botones
+    public GameObject botonGuantes;
+    public GameObject botonGafas;
+    public GameObject botonPieza;
     public GameObject botonOn;
     public GameObject botonPuerta;
 
@@ -47,9 +50,6 @@ public class TutorialManager : MonoBehaviour
         // Verifica si se ha hecho clic en el objeto objetivo del paso actual
         if (IsClicked(currentStep.target))
         {
-            // Realiza acciones relacionadas con el clic en el objeto objetivo
-            Debug.Log("Objeto clicado: " + currentStep.target.name);
-
             // Avanza al siguiente paso
             currentStepIndex++;
         }
@@ -63,7 +63,10 @@ public class TutorialManager : MonoBehaviour
 
     private void rellenarPasos()
     {
-        tutorialSteps.Add(new TutorialStep(botonOn, "Haz clic en el botón de encendido"));
+        tutorialSteps.Add(new TutorialStep(botonGafas, "Coge las gafas de seguridad"));
+        tutorialSteps.Add(new TutorialStep(botonGuantes, "Coge los guantes de seguridad"));
+        tutorialSteps.Add(new TutorialStep(botonPieza, "Coge lapiella a tallar"));
+        tutorialSteps.Add(new TutorialStep(botonOn, "Haz clic en el botón de encendido de la máquina"));
         tutorialSteps.Add(new TutorialStep(botonPuerta, "Cierra la puerta utilizando el botón"));
     }
 
@@ -83,8 +86,6 @@ public class TutorialManager : MonoBehaviour
     {
         instructionText.text = "Tutorial completado";
         fadeCanvasScript.Fade();
-
-        Debug.Log("Tutorial completado.");
     }
 
     private bool IsClicked(GameObject targetObject)

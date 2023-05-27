@@ -25,18 +25,24 @@ public class lucesMaquina : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (luzInterior.activeSelf) {
-           rendererInterior.material.EnableKeyword("_EMISSION");
-           rendererInterior.material.SetColor("_EmissionColor",  luzAmarilla * 8.0f);
-        } else {
-           rendererInterior.material.SetColor("_EmissionColor",  Color.black);
+        if (luzInterior.activeSelf) 
+        {
+         rendererInterior.material.EnableKeyword("_EMISSION");
+         rendererInterior.material.SetColor("_EmissionColor",  luzAmarilla * 8.0f);
+        } 
+        else 
+        {
+         rendererInterior.material.SetColor("_EmissionColor",  Color.black);
         }
         
-        if (luzExterior.activeSelf) {
-           rendererExterior.material.EnableKeyword("_EMISSION");
-           rendererExterior.material.SetColor("_EmissionColor",  luzRoja * 3.0f);
-        } else {
-           rendererExterior.material.SetColor("_EmissionColor",  Color.black);
+        if (luzExterior.activeSelf) 
+        {
+         rendererExterior.material.EnableKeyword("_EMISSION");
+         rendererExterior.material.SetColor("_EmissionColor",  luzRoja * 3.0f);
+        }
+        else
+        {
+         rendererExterior.material.SetColor("_EmissionColor",  Color.black);
         }
     }
 }
