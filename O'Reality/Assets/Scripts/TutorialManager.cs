@@ -9,7 +9,6 @@ public class TutorialManager : MonoBehaviour
     //Objetos para el tutorial
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private int currentStepIndex = 0;
-    private bool final;
 
     //Botones
     public GameObject botonGuantes;
@@ -17,19 +16,21 @@ public class TutorialManager : MonoBehaviour
     public GameObject botonPieza;
     public GameObject botonOn;
     public GameObject botonPuerta;
+    public GameObject botonPantalla;
 
     //Pantalla
     public Camera mainCamera;
     public Text instructionText;
     public RectTransform tutorialCanvas;
     public FadeCanvas fadeCanvasScript;
+    public AudioSource audioAcierto;
     public float canvasDistance;
     public float canvasHorizontalOffset;
     
     // Start is called before the first frame update
     void Start()
     {
-        final = false;
+        audioAcierto.Stop();
         rellenarPasos();
     }
 
@@ -47,11 +48,10 @@ public class TutorialManager : MonoBehaviour
         // Obtiene el paso actual
         TutorialStep currentStep = tutorialSteps[currentStepIndex];
 
-        // Verifica si se ha hecho clic en el objeto objetivo del paso actual
         if (IsClicked(currentStep.target))
         {
-            // Avanza al siguiente paso
             currentStepIndex++;
+            audioAcierto.Play();
         }
 
         if (tutorialCanvas != null && mainCamera != null)
@@ -65,9 +65,10 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialSteps.Add(new TutorialStep(botonGafas, "Coge las gafas de seguridad"));
         tutorialSteps.Add(new TutorialStep(botonGuantes, "Coge los guantes de seguridad"));
-        tutorialSteps.Add(new TutorialStep(botonPieza, "Coge lapiella a tallar"));
+        tutorialSteps.Add(new TutorialStep(botonPieza, "Coge la pieza a tallar y depsítala en la zona de corte"));
         tutorialSteps.Add(new TutorialStep(botonOn, "Haz clic en el botón de encendido de la máquina"));
         tutorialSteps.Add(new TutorialStep(botonPuerta, "Cierra la puerta utilizando el botón"));
+        tutorialSteps.Add(new TutorialStep(botonPantalla, "Selecciona la pieza que quieras tallar"));
     }
 
     private void posicionPantalla()
@@ -100,10 +101,7 @@ public class TutorialManager : MonoBehaviour
             {
                 return true;
             } 
-        } else {
-            Debug.LogError("No hay componente interactable");
         }
-
         return false;
     }
 }

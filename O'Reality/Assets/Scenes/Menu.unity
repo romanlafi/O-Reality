@@ -640,7 +640,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetoASeguir: {fileID: 1761984590}
   textoRotante: {fileID: 208326514}
-  alturaTexto: 1
 --- !u!1 &1072054152
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,7 +807,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetoASeguir: {fileID: 2133635390}
   textoRotante: {fileID: 688519866}
-  alturaTexto: 1
 --- !u!1 &1761984589
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +824,7 @@ GameObject:
   - component: {fileID: 1761984596}
   - component: {fileID: 1761984597}
   m_Layer: 0
-  m_Name: Boton1
+  m_Name: Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1046,7 +1044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629d0cd7fac1e144c82e7137cef71ab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: SampleScene
+  sceneName: Tutorial
 --- !u!1 &2133635389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,8 +1059,10 @@ GameObject:
   - component: {fileID: 2133635393}
   - component: {fileID: 2133635392}
   - component: {fileID: 2133635391}
+  - component: {fileID: 2133635397}
+  - component: {fileID: 2133635396}
   m_Layer: 0
-  m_Name: Boton1 (1)
+  m_Name: Evaluacion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1202,3 +1202,72 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133635389}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2133635396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133635389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629d0cd7fac1e144c82e7137cef71ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Evaluacion
+--- !u!114 &2133635397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133635389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1410eac1ae94b4d4492a09cc368e152c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  states: {fileID: 11400000, guid: 5eac1712038236e4b8ffdb3893804fe1, type: 2}
+  InputActionId: 0
+  isGlobal: 0
+  Dimensions: 1
+  dimensionIndex: 0
+  startDimensionIndex: 0
+  CanSelect: 1
+  CanDeselect: 1
+  voiceCommand: 
+  voiceRequiresFocus: 1
+  profiles:
+  - Target: {fileID: 0}
+    Themes:
+    - {fileID: 0}
+  OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2133635396}
+        m_TargetAssemblyTypeName: SceneLauncher, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1167126733}
+        m_TargetAssemblyTypeName: SoundPlayer, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Events: []
+  resetOnDestroy: 0
+  enabledOnStart: 1
