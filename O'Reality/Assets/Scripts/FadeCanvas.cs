@@ -12,7 +12,11 @@ public class FadeCanvas : MonoBehaviour
     public void Fade()
     {
         StartCoroutine(FadeOut());
-        Debug.Log("Fade iniciado");
+    }
+
+    public void encenderCanvas()
+    {
+        StartCoroutine(FadeIn());
     }
 
     private void Start()
@@ -20,7 +24,7 @@ public class FadeCanvas : MonoBehaviour
         if (canvasGroup == null) canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private System.Collections.IEnumerator FadeOut()
+    IEnumerator FadeOut()
     {
         yield return new WaitForSeconds(delay);
 
@@ -41,5 +45,24 @@ public class FadeCanvas : MonoBehaviour
         // Desactivar el objeto Canvas
         canvasGroup.gameObject.SetActive(false);
         Debug.Log("Canvas desactivado");
+    }
+
+    IEnumerator FadeIn()
+    {
+        canvasGroup.gameObject.SetActive(true); // Activar el objeto Canvas
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            // Calcular el valor de opacidad intermedio
+            float alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
+
+            // Establecer la opacidad del CanvasGroup
+            canvasGroup.alpha = alpha;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        Debug.Log("Fade In completado");
     }
 }

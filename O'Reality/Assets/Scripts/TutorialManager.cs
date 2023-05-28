@@ -40,7 +40,6 @@ public class TutorialManager : MonoBehaviour
         // Verifica si el tutorial ha terminado
         if (currentStepIndex >= tutorialSteps.Count)
         {
-            currentStepIndex = -1;
             terminarTutorial();
             return;
         }
@@ -68,7 +67,7 @@ public class TutorialManager : MonoBehaviour
         tutorialSteps.Add(new TutorialStep(botonPieza, "Coge la pieza a tallar y depsítala en la zona de corte"));
         tutorialSteps.Add(new TutorialStep(botonOn, "Haz clic en el botón de encendido de la máquina"));
         tutorialSteps.Add(new TutorialStep(botonPuerta, "Cierra la puerta utilizando el botón"));
-        tutorialSteps.Add(new TutorialStep(botonPantalla, "Selecciona la pieza que quieras tallar"));
+        tutorialSteps.Add(new TutorialStep(botonPantalla, "Selecciona la primera pieza para tallarla"));
     }
 
     private void posicionPantalla()
@@ -85,8 +84,8 @@ public class TutorialManager : MonoBehaviour
 
     private void terminarTutorial()
     {
-        instructionText.text = "Tutorial completado";
-        fadeCanvasScript.Fade();
+        instructionText.text = "Tutorial completado!\nAhora puedes abrir la puerta y coger la pieza tallada";
+        fadeCanvasScript.encenderCanvas();
     }
 
     private bool IsClicked(GameObject targetObject)

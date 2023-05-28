@@ -37,9 +37,9 @@ public class EvaluacionManager : MonoBehaviour
     void Start()
     {
         puntuacion = 0;
+        fallosText.text = string.Empty;
         fin = false;
         canvas.enabled = false;
-        fallosText.text = string.Empty;
         audioAcierto.Stop();
         rellenarPasos();
     }
@@ -52,11 +52,12 @@ public class EvaluacionManager : MonoBehaviour
             posicionPantalla();
         }
 
-        if (IsClicked(botonPieza) && !fin)
+        if (IsClicked(botonPantalla) && !fin)
         {
             fin = true;
             contarPuntos();
             formatoPantalla();
+            fadeCanvasScript.encenderCanvas();
         }
     }
 
@@ -65,20 +66,14 @@ public class EvaluacionManager : MonoBehaviour
         int count = evaluacionSteps.Count;
         float valorPaso = 1f/count;
 
-        Debug.Log("Valor paso " + valorPaso);
-
         for (int i=0 ; i<evaluacionSteps.Count ; i++)
         {
             EvaluacionStep step = evaluacionSteps[i];
 
             if (IsClicked(step.target))
             {
-                Debug.Log(step.target.name + " sumado");
-
                 puntuacion += valorPaso;
-
-                Debug.Log("nota acomulada " + puntuacion);
-                notaText.text = (puntuacion* 10).ToString("F2");
+                notaText.text = (puntuacion * 10).ToString("#.##");
             } else {
                 evaluacionFallos.Add(step);
             }
@@ -93,6 +88,7 @@ public class EvaluacionManager : MonoBehaviour
 
             resultadoText.text = "Aprobado";
             resultadoText.color = Color.green;
+            audioAcierto.Play();
             
         } else {
             notaText.color = Color.red;
@@ -104,7 +100,12 @@ public class EvaluacionManager : MonoBehaviour
         for (int i=0 ; i<evaluacionFallos.Count ; i++)
         {   
             EvaluacionStep step = evaluacionFallos[i];
-            fallosText.text += step.ToString();
+            fallosText.text += step.ToString() + "\n";
+        }
+
+        if (string.IsNullOrEmpty(fallosText.text))
+        {
+            fallosText.text = "No has tenido fallos, enhorabuena!";
         }
 
         canvas.enabled = true;
@@ -115,7 +116,9 @@ public class EvaluacionManager : MonoBehaviour
         evaluacionSteps.Add(new EvaluacionStep(botonGafas, 1, "Equipar las gafas"));
         evaluacionSteps.Add(new EvaluacionStep(botonGuantes, 2, "Equipar los guantes"));
         evaluacionSteps.Add(new EvaluacionStep(botonPieza, 3, "Insertar pieza en su sitio"));
-        Debug.Log("Rellenado");
+        evaluacionSteps.Add(new EvaluacionStep(botonOn, 4, "Encender la máquina"));
+        evaluacionSteps.Add(new EvaluacionStep(botonPuerta, 5, "Cerrar la puerta"));
+        evaluacionSteps.Add(new EvaluacionStep(botonPantalla, 6, "Seleccionar la pieza a tallar"));
     }
 
     private void posicionPantalla()
@@ -141,7 +144,6 @@ public class EvaluacionManager : MonoBehaviour
             if (interactable.ClickCount == 1)
             {
                 return true;
-                Debug.Log("Objeto clicado");
             } 
         }
         return false;

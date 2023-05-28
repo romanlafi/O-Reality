@@ -12,13 +12,14 @@ public class Move : MonoBehaviour
 
     public GameObject luzInterior;
     public GameObject luzExterior;
-    bool click = false;
+    bool click = true;
 
     // Start is called before the first frame update
     void Start()
     {    
         luzInterior.SetActive(true);
         luzExterior.SetActive(true);
+        doorPosition.position = targetPosition.position;
     }
 
     public void clickMe()
