@@ -8,6 +8,7 @@ public class FadeCanvas : MonoBehaviour
     public CanvasGroup canvasGroup;
     public float fadeDuration;
     public float delay;
+    public SceneLauncher sceneLauncher;
 
     public void Fade()
     {

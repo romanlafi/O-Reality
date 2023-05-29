@@ -9,6 +9,7 @@ public class TutorialManager : MonoBehaviour
     //Objetos para el tutorial
     private List<TutorialStep> tutorialSteps = new List<TutorialStep>();
     private int currentStepIndex = 0;
+    private bool fin; 
 
     //Botones
     public GameObject botonGuantes;
@@ -17,11 +18,13 @@ public class TutorialManager : MonoBehaviour
     public GameObject botonOn;
     public GameObject botonPuerta;
     public GameObject botonPantalla;
+    public GameObject botonesMenu;
 
     //Pantalla
     public Camera mainCamera;
     public Text instructionText;
     public RectTransform tutorialCanvas;
+    public Canvas canvas;
     public FadeCanvas fadeCanvasScript;
     public AudioSource audioAcierto;
     public float canvasDistance;
@@ -30,6 +33,8 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fin = false;
+        botonesMenu.SetActive(false);
         audioAcierto.Stop();
         rellenarPasos();
     }
@@ -38,8 +43,9 @@ public class TutorialManager : MonoBehaviour
     void Update()
     {
         // Verifica si el tutorial ha terminado
-        if (currentStepIndex >= tutorialSteps.Count)
+        if (currentStepIndex >= tutorialSteps.Count && !fin)
         {
+            fin = true;
             terminarTutorial();
             return;
         }
@@ -85,7 +91,8 @@ public class TutorialManager : MonoBehaviour
     private void terminarTutorial()
     {
         instructionText.text = "Tutorial completado!\nAhora puedes abrir la puerta y coger la pieza tallada";
-        fadeCanvasScript.encenderCanvas();
+        fadeCanvasScript.Fade();
+        botonesMenu.SetActive(true);
     }
 
     private bool IsClicked(GameObject targetObject)
@@ -96,8 +103,12 @@ public class TutorialManager : MonoBehaviour
         if (interactable != null)
         {
             // Verifica si el objeto ha sido clicado utilizando su propiedad "IsClicked"
-            if (interactable.ClickCount == 1)
+            if (interactable.ClickCount >= 1)
             {
+                interactable.enabled = false;
+                interactable.enabled = true;
+
+                Debug.Log(targetObject.name + "Clicado y reiniciado");
                 return true;
             } 
         }

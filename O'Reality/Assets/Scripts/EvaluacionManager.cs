@@ -20,6 +20,7 @@ public class EvaluacionManager : MonoBehaviour
     public GameObject botonOn;
     public GameObject botonPuerta;
     public GameObject botonPantalla;
+    public GameObject botonesMenu;
 
     //Pantalla
     public Camera mainCamera;
@@ -30,17 +31,20 @@ public class EvaluacionManager : MonoBehaviour
     public RectTransform tutorialCanvas;
     public FadeCanvas fadeCanvasScript;
     public AudioSource audioAcierto;
+    public AudioSource audioFallo;
     public float canvasDistance;
     public float canvasHorizontalOffset;
 
     // Start is called before the first frame update
     void Start()
     {
+        botonesMenu.SetActive(false);
         puntuacion = 0;
         fallosText.text = string.Empty;
         fin = false;
         canvas.enabled = false;
         audioAcierto.Stop();
+        audioFallo.Stop();
         rellenarPasos();
     }
 
@@ -58,6 +62,8 @@ public class EvaluacionManager : MonoBehaviour
             contarPuntos();
             formatoPantalla();
             fadeCanvasScript.encenderCanvas();
+            botonesMenu.SetActive(true);
+            fadeCanvasScript.Fade();
         }
     }
 
@@ -95,6 +101,8 @@ public class EvaluacionManager : MonoBehaviour
 
             resultadoText.text = "Suspenso";
             resultadoText.color = Color.red;
+            audioFallo.Play();
+            Debug.Log("Suspendido");
         }
 
         for (int i=0 ; i<evaluacionFallos.Count ; i++)

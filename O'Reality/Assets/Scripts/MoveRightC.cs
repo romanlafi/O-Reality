@@ -75,10 +75,7 @@ public class MoveRightC : MonoBehaviour
     void Update()
     {
         if (call)
-        {   // turn on the screen
-            //canvas.enabled = true;
-            //cubeContainer.gameObject.SetActive(true);
-
+        {   
             // enable the video video
             textMeshPro.enabled = true;
             rawImage.enabled = true;
@@ -90,10 +87,7 @@ public class MoveRightC : MonoBehaviour
         }
 
         if (callback)
-        {   // turn off the screen
-            //canvas.enabled = false;
-            //cubeContainer.gameObject.SetActive(false);
-
+        {   
             // disable the vibration video
             textMeshPro.enabled = false;
             rawImage.enabled = false;
