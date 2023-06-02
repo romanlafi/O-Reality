@@ -44,7 +44,6 @@ public class MoveRightC : MonoBehaviour
         anim = LeftC.GetComponent<Animator>();
         canvas.enabled = false;
         sonidoCrafteo.Stop();
-        //cubeContainer.gameObject.SetActive(false);
     }
 
 
@@ -82,6 +81,7 @@ public class MoveRightC : MonoBehaviour
 
             needleAnim.SetBool("turn", true);
             sonidoCrafteo.Play();
+            Debug.Log("Crafteando");
 
             movmment();
         }
@@ -93,8 +93,7 @@ public class MoveRightC : MonoBehaviour
             rawImage.enabled = false;
 
             needleAnim.SetBool("turn", false);
-            back();
-            
+            back();    
         }
     }
 
@@ -128,9 +127,6 @@ public class MoveRightC : MonoBehaviour
                 call = false;
             }
         }
-
-
-        
     }
 
     private void back()
@@ -155,7 +151,6 @@ public class MoveRightC : MonoBehaviour
         }
         if (movingUP)
         {
-
             transform.position = Vector3.MoveTowards(transform.position, OriginalPos, 1 * Time.deltaTime);
             if (transform.position == OriginalPos)
             {
@@ -164,5 +159,4 @@ public class MoveRightC : MonoBehaviour
             }
         }
     }
-
 }

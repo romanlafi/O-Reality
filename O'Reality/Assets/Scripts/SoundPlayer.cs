@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundPlayer : MonoBehaviour
 {
-     public AudioClip soundClip; // Clip de sonido a reproducir
+    public AudioClip soundClip; // Clip de sonido a reproducir
     private AudioSource audioSource;
 
     // Start is called before the first frame update

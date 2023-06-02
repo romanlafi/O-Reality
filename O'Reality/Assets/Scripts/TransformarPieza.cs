@@ -35,37 +35,34 @@ public class TransformarPieza : MonoBehaviour
     private void Transform()
     {
         MeshRenderer meshRenderer = antes.GetComponent<MeshRenderer>();
-    if (meshRenderer == null)
-    {
-        Debug.LogError("El objeto 'antes' no tiene un componente MeshRenderer.");
-        return;
-    }
+        if (meshRenderer == null)
+        {
+            return;
+        }
 
-    // Obtener el nuevo objeto Mesh que deseas utilizar
-    Mesh nuevoMesh = despues.GetComponent<MeshFilter>().sharedMesh;
-    if (nuevoMesh == null)
-    {
-        Debug.LogError("El objeto 'despues' no tiene un componente MeshFilter con un Mesh asignado.");
-        return;
-    }
+        // Obtener el nuevo objeto Mesh que deseas utilizar
+        Mesh nuevoMesh = despues.GetComponent<MeshFilter>().sharedMesh;
+        if (nuevoMesh == null)
+        {
+            return;
+        }
 
-    // Asignar el nuevo objeto Mesh al componente MeshFilter del objeto 'antes'
-    MeshFilter meshFilter = antes.GetComponent<MeshFilter>();
-    if (meshFilter == null)
-    {
-        meshFilter = antes.AddComponent<MeshFilter>();
-    }
-    meshFilter.sharedMesh = nuevoMesh;
+        // Asignar el nuevo objeto Mesh al componente MeshFilter del objeto 'antes'
+        MeshFilter meshFilter = antes.GetComponent<MeshFilter>();
+        if (meshFilter == null)
+        {
+            meshFilter = antes.AddComponent<MeshFilter>();
+        }
+        meshFilter.sharedMesh = nuevoMesh;
 
-    Vector3 nuevoTamaño = despues.transform.localScale;
-    antes.transform.localScale = nuevoTamaño;
+        Vector3 nuevoTamaño = despues.transform.localScale;
+        antes.transform.localScale = nuevoTamaño;
 
-    Vector3 newPosition = antes.transform.localPosition;
-    newPosition += new Vector3(0f, -0.017f, 0f);
+        Vector3 newPosition = antes.transform.localPosition;
+        newPosition += new Vector3(0f, -0.017f, 0f);
 
-    antes.transform.localPosition = newPosition;
-    Debug.Log("Transformado.");
+        antes.transform.localPosition = newPosition;
 
-    tallar = false;
+        tallar = false;
     }
 }
